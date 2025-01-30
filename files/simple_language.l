@@ -4,6 +4,8 @@
 #include "y.tab.h"
 %}
 
+%option yylineno
+
 %%
 
 [a-zA-Z][a-zA-Z0-9]*    { yylval.str = new std::string(yytext);  return ID; }
@@ -15,7 +17,10 @@
 "="                     { return '='; }
 ":"                     { return ':'; }
 [ \t]                   ;  // skip whitespace
-.|\n                    ; /* ignore all the rest */
+. {
+    fprintf(stderr, "Error léxico: Caracter inválido '%s' en línea %d\n", yytext, yylineno);
+    yyterminate();
+}
 
 %%
 
