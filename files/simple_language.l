@@ -13,6 +13,8 @@
 "*"                     { return '*'; }
 "/"                     { return '/'; }
 "="                     { return '='; }
+"("                     { return '('; }  
+")"                     { return ')'; }  
 ":"                     { return ':'; }
 [ \t]                   ;  // skip whitespace
 .|\n                    ; /* ignore all the rest */

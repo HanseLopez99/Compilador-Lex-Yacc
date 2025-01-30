@@ -15,10 +15,9 @@ int yylex();
 %type<num> assignment
 
 %right '='
-%left '+' '-'
 %left '*' '/'
-%left UMINUS
-%left '(' ')'
+%left '+' '-'
+%nonassoc '(' ')'
 
 %%
 
@@ -30,7 +29,7 @@ statement_list: statement
     ;
 
 statement: assignment
-    | expression '\n'          { std::cout << $1 << std::endl; }
+    | expression ':'          { std::cout << $1 << std::endl; }
     ;
 
 assignment: ID '=' expression
@@ -42,13 +41,12 @@ assignment: ID '=' expression
     ;
 
 expression: NUMBER                  { $$ = $1; }
-    | ID                            { $$ = vars[*$1]; delete $1; }
+    | ID                            { $$ = vars[*$1];      delete $1; }
     | expression '+' expression     { $$ = $1 + $3; }
     | expression '-' expression     { $$ = $1 - $3; }
     | expression '*' expression     { $$ = $1 * $3; }
     | expression '/' expression     { $$ = $1 / $3; }
-    | '(' expression ')'            { $$ = $2; }
-    | '-' expression %prec UMINUS   { $$ = -$2; }
+    | '('expression')'              { $$ = $2; }
     ;
 
 %%
