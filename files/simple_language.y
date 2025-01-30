@@ -36,8 +36,8 @@ statement_list: statement
     | statement_list statement
     ;
 
-statement: assignment
-    | expression ':'          { std::cout << $1 << std::endl; }
+statement: assignment ':'
+    | expression ':' { std::cout << $1 << std::endl; }
     ;
 
 assignment: ID '=' expression
